@@ -1093,6 +1093,38 @@
       #status-label { font-size: 12px; font-weight: 700; }
       .status-opens { font-size: 9.5px; letter-spacing: 0.3px; }
     }
+
+    /* ── WIDE-SCREEN CONTENT CAP ── */
+    /* Backgrounds stay full-bleed; content centred at max 1280px */
+    @media (min-width: 1281px) {
+      header {
+        padding-left: max(28px, calc((100vw - 1280px) / 2));
+        padding-right: max(28px, calc((100vw - 1280px) / 2));
+      }
+      .hero-card { max-width: 900px; }
+      .photo-strip,
+      .services-grid,
+      .about-section,
+      .info-row { max-width: 1280px; margin-left: auto; margin-right: auto; }
+      .same-day-banner {
+        padding-left: max(40px, calc((100vw - 1280px) / 2));
+        padding-right: max(40px, calc((100vw - 1280px) / 2));
+      }
+      .reviews {
+        padding-left: max(40px, calc((100vw - 1280px) / 2));
+        padding-right: max(40px, calc((100vw - 1280px) / 2));
+      }
+      .find-us {
+        padding-left: max(40px, calc((100vw - 1280px) / 2));
+        padding-right: max(40px, calc((100vw - 1280px) / 2));
+      }
+      .footer-cta {
+        padding-left: max(20px, calc((100vw - 1280px) / 2));
+        padding-right: max(20px, calc((100vw - 1280px) / 2));
+      }
+      .brands-overflow,
+      .brands-heading { max-width: 1280px; margin-left: auto; margin-right: auto; }
+    }
   </style>
 </head>
 <body>

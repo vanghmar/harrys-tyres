@@ -316,6 +316,67 @@
       max-width: 420px;
     }
 
+    /* ── TYRE SIZE GUIDE ── */
+    .tyre-size-guide {
+      background: var(--gray-bg);
+      padding: 48px 32px;
+    }
+    .tsg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .tsg-content {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .tsg-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #888;
+      text-transform: uppercase;
+    }
+    .tsg-heading {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.2;
+      margin: 0;
+    }
+    .tsg-rule {
+      width: 36px;
+      height: 3px;
+      background: var(--yellow);
+      margin-bottom: 4px;
+    }
+    .tsg-text {
+      font-size: 14.5px;
+      color: #333;
+      line-height: 1.65;
+      margin: 0;
+    }
+    .tsg-text strong {
+      color: var(--navy);
+    }
+    .tsg-image {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .tsg-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .tsg-grid { grid-template-columns: 1fr; gap: 24px; }
+      .tyre-size-guide { padding: 36px 20px; }
+      .tsg-heading { font-size: 22px; }
+    }
+
     /* ── BRANDS BAR ── */
     .brands-bar {
       background: var(--off-white);
@@ -1259,6 +1320,29 @@
       <div class="svc-label">Alloy Wheels</div>
     </div>
 
+  </div>
+</div>
+
+<!-- ── TYRE SIZE GUIDE ── -->
+<div class="tyre-size-guide">
+  <div class="tsg-grid">
+    <div class="tsg-content">
+      <div class="tsg-eyebrow">Tyre Size Guide</div>
+      <h2 class="tsg-heading">FIND YOUR TYRE SIZE</h2>
+      <div class="tsg-rule"></div>
+      <p class="tsg-text">
+        Check the sidewall of your existing tyre — you'll see a code like <strong>205/55 R16</strong>. That's the size you need.
+      </p>
+      <p class="tsg-text">
+        Each number tells us something different: tyre <strong>width</strong>, profile <strong>height</strong>, construction type, and wheel <strong>diameter</strong>.
+      </p>
+      <p class="tsg-text">
+        Not sure? Just give us a call with your <strong>reg plate</strong> — we'll find the right size for you.
+      </p>
+    </div>
+    <div class="tsg-image">
+      <img src="https://www.sblmobiletyres.co.uk/assets/images/tyre-size-chart.jpg" alt="Tyre size chart guide" loading="lazy">
+    </div>
   </div>
 </div>
 

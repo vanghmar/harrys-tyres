@@ -898,6 +898,13 @@
       border-radius: 8px;
     }
 
+    .map-app-logo {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
     .btn-waze {
       background: var(--yellow);
       color: var(--navy);
@@ -1391,30 +1398,11 @@
 
 <div class="map-btns">
   <a href="https://www.google.com/maps/dir//Harrys+Tyres,+73-75+Nottingham+Rd,+Loughborough+LE11+1ES/@52.7755645,-1.1994496,17z" target="_blank" class="btn-gmaps">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="3,6 9,3 15,6 21,3 21,18 15,21 9,18 3,21"/>
-      <line x1="9" y1="3" x2="9" y2="18"/>
-      <line x1="15" y1="6" x2="15" y2="21"/>
-    </svg>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Google_Maps_icon_%282020%29.svg/512px-Google_Maps_icon_%282020%29.svg.png" alt="Google Maps" class="map-app-logo">
     GOOGLE MAPS
   </a>
   <a href="https://waze.com/ul?ll=52.7754411,-1.1992543&navigate=yes" target="_blank" class="btn-waze">
-    <svg width="16" height="16" viewBox="0 0 16 16">
-      <defs>
-        <radialGradient id="sphereGrad" cx="38%" cy="32%" r="60%">
-          <stop offset="0%"   stop-color="#5b7fbb"/>
-          <stop offset="45%"  stop-color="#1e3a6e"/>
-          <stop offset="100%" stop-color="#0b1e3d"/>
-        </radialGradient>
-        <radialGradient id="gloss" cx="40%" cy="28%" r="40%">
-          <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.35"/>
-          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-        </radialGradient>
-      </defs>
-      <circle cx="8" cy="8" r="7.5" fill="#0b1e3d" opacity="0.25" transform="translate(0.5,1)"/>
-      <circle cx="8" cy="8" r="7.5" fill="url(#sphereGrad)"/>
-      <circle cx="8" cy="8" r="7.5" fill="url(#gloss)"/>
-    </svg>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Waze_icon.svg/512px-Waze_icon.svg.png" alt="Waze" class="map-app-logo">
     WAZE
   </a>
 </div>

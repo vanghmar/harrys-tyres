@@ -9,22 +9,24 @@
   <!-- Google Search Console verification -->
   <meta name="google-site-verification" content="VXOi01566IXit5CZz2lBq9wvCAyC_Vkwl5NYX4UZ7ig" />
 
-  <!-- Google Analytics (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57NL0F0VR7"></script>
+  <!-- Google Consent Mode v2 — default deny everything until user accepts -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-57NL0F0VR7');
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
   </script>
 
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wr3pu918wb");
+  <!-- Google Analytics (gtag.js) — fires only after consent granted -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57NL0F0VR7"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-57NL0F0VR7');
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
@@ -1183,6 +1185,82 @@
       #status-label { font-size: 12px; font-weight: 700; }
       .status-opens { font-size: 9.5px; letter-spacing: 0.3px; }
     }
+
+    /* ── COOKIE BANNER ── */
+    .cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      max-width: 720px;
+      margin: 0 auto;
+      background: #18253f;
+      color: #fff;
+      padding: 18px 22px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      z-index: 9999;
+      display: none;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    .cookie-banner.show { display: block; }
+    .cookie-content {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .cookie-text {
+      flex: 1;
+      min-width: 240px;
+    }
+    .cookie-text a {
+      color: var(--yellow);
+      text-decoration: underline;
+    }
+    .cookie-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .cookie-btn {
+      border: none;
+      padding: 10px 18px;
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-family: inherit;
+      transition: opacity 0.18s ease, transform 0.15s ease;
+    }
+    .cookie-btn:hover { transform: translateY(-1px); }
+    .cookie-btn-primary {
+      background: var(--yellow);
+      color: var(--navy);
+    }
+    .cookie-btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.35);
+    }
+    @media (max-width: 640px) {
+      .cookie-banner {
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        padding: 14px 16px;
+        font-size: 13px;
+      }
+      .cookie-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      .cookie-actions { width: 100%; }
+      .cookie-btn { flex: 1; }
+    }
   </style>
 </head>
 <body>
@@ -1712,6 +1790,65 @@
 
   updateLayout();
   startAuto();
+})();
+</script>
+
+<!-- ── COOKIE CONSENT BANNER ── -->
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="cookie-content">
+    <div class="cookie-text">
+      We use cookies to analyse traffic and improve your experience. By clicking "Accept", you agree to our use of analytics cookies.
+    </div>
+    <div class="cookie-actions">
+      <button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject</button>
+      <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'harrystyres-cookie-consent';
+  var banner = document.getElementById('cookie-banner');
+  var consent = localStorage.getItem(STORAGE_KEY);
+
+  function loadClarity() {
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wr3pu918wb");
+  }
+
+  function grantConsent() {
+    if (typeof gtag === 'function') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'analytics_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
+      });
+    }
+    loadClarity();
+  }
+
+  if (consent === 'accepted') {
+    grantConsent();
+  } else if (!consent) {
+    // No previous choice — show banner
+    banner.classList.add('show');
+  }
+
+  document.getElementById('cookie-accept').addEventListener('click', function() {
+    localStorage.setItem(STORAGE_KEY, 'accepted');
+    banner.classList.remove('show');
+    grantConsent();
+  });
+
+  document.getElementById('cookie-reject').addEventListener('click', function() {
+    localStorage.setItem(STORAGE_KEY, 'rejected');
+    banner.classList.remove('show');
+  });
 })();
 </script>
 </body>

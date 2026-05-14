@@ -1223,6 +1223,7 @@
       flex: 1;
       min-width: 240px;
     }
+    .cookie-text strong { color: var(--yellow); }
     .cookie-text a {
       color: var(--yellow);
       text-decoration: underline;
@@ -1230,10 +1231,11 @@
     .cookie-actions {
       display: flex;
       gap: 10px;
+      align-items: center;
     }
     .cookie-btn {
       border: none;
-      padding: 10px 18px;
+      padding: 11px 20px;
       font-weight: 800;
       font-size: 12px;
       text-transform: uppercase;
@@ -1248,10 +1250,90 @@
       background: var(--yellow);
       color: var(--navy);
     }
+    .cookie-btn-link {
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      text-decoration: underline;
+      padding: 11px 6px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .cookie-btn-link:hover {
+      color: #fff;
+      transform: none;
+    }
     .cookie-btn-secondary {
       background: transparent;
       color: #fff;
       border: 1.5px solid rgba(255,255,255,0.35);
+    }
+    /* Customize panel */
+    .cookie-customize {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .cookie-banner.customizing .cookie-customize { display: block; }
+    .cookie-banner.customizing .cookie-actions-main { display: none; }
+    .cookie-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 0;
+    }
+    .cookie-row + .cookie-row {
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .cookie-row-info { flex: 1; }
+    .cookie-row-title {
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+    .cookie-row-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.45;
+    }
+    .cookie-toggle {
+      position: relative;
+      width: 38px;
+      height: 22px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 999px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.18s ease;
+      margin-top: 2px;
+    }
+    .cookie-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.18s ease;
+    }
+    .cookie-toggle.on {
+      background: var(--yellow);
+    }
+    .cookie-toggle.on::after {
+      transform: translateX(16px);
+    }
+    .cookie-toggle.locked {
+      background: rgba(245,197,24,0.55);
+      cursor: not-allowed;
+    }
+    .cookie-customize-actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
     }
     @media (max-width: 640px) {
       .cookie-banner {
@@ -1266,8 +1348,10 @@
         align-items: stretch;
         gap: 12px;
       }
-      .cookie-actions { width: 100%; }
-      .cookie-btn { flex: 1; }
+      .cookie-actions { width: 100%; justify-content: space-between; }
+      .cookie-btn-primary { flex: 1; }
+      .cookie-customize-actions { flex-direction: column-reverse; }
+      .cookie-customize-actions .cookie-btn { width: 100%; }
     }
   </style>
 </head>
@@ -1805,11 +1889,32 @@
 <div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Cookie consent">
   <div class="cookie-content">
     <div class="cookie-text">
-      We use cookies to analyse traffic and improve your experience. By clicking "Accept", you agree to our use of analytics cookies.
+      🍪 We use cookies to make Harry's Tyres better for you — understanding which pages you visit so we can keep improving the site. It's anonymous and helps us serve you faster.
     </div>
-    <div class="cookie-actions">
-      <button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject</button>
-      <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept</button>
+    <div class="cookie-actions cookie-actions-main">
+      <button id="cookie-customize" class="cookie-btn cookie-btn-link">Customize</button>
+      <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept All</button>
+    </div>
+  </div>
+
+  <div class="cookie-customize">
+    <div class="cookie-row">
+      <div class="cookie-row-info">
+        <div class="cookie-row-title">Essential</div>
+        <div class="cookie-row-desc">Required for the site to work properly. Always on.</div>
+      </div>
+      <div class="cookie-toggle on locked" aria-label="Essential cookies always on" title="Always required"></div>
+    </div>
+    <div class="cookie-row">
+      <div class="cookie-row-info">
+        <div class="cookie-row-title">Analytics</div>
+        <div class="cookie-row-desc">Anonymous data about how visitors use the site, helping us improve it.</div>
+      </div>
+      <div id="toggle-analytics" class="cookie-toggle on" role="switch" aria-checked="true" tabindex="0"></div>
+    </div>
+    <div class="cookie-customize-actions">
+      <button id="cookie-save" class="cookie-btn cookie-btn-secondary">Save Preferences</button>
+      <button id="cookie-accept-all" class="cookie-btn cookie-btn-primary">Accept All</button>
     </div>
   </div>
 </div>
@@ -1819,6 +1924,7 @@
   var STORAGE_KEY = 'harrystyres-cookie-consent';
   var banner = document.getElementById('cookie-banner');
   var consent = localStorage.getItem(STORAGE_KEY);
+  var analyticsToggle = document.getElementById('toggle-analytics');
 
   function loadClarity() {
     (function(c,l,a,r,i,t,y){
@@ -1843,19 +1949,41 @@
   if (consent === 'accepted') {
     grantConsent();
   } else if (!consent) {
-    // No previous choice — show banner
     banner.classList.add('show');
   }
 
-  document.getElementById('cookie-accept').addEventListener('click', function() {
-    localStorage.setItem(STORAGE_KEY, 'accepted');
+  function closeBanner(state) {
+    localStorage.setItem(STORAGE_KEY, state);
     banner.classList.remove('show');
+    banner.classList.remove('customizing');
+  }
+
+  document.getElementById('cookie-accept').addEventListener('click', function() {
+    closeBanner('accepted');
     grantConsent();
   });
 
-  document.getElementById('cookie-reject').addEventListener('click', function() {
-    localStorage.setItem(STORAGE_KEY, 'rejected');
-    banner.classList.remove('show');
+  document.getElementById('cookie-accept-all').addEventListener('click', function() {
+    closeBanner('accepted');
+    grantConsent();
+  });
+
+  document.getElementById('cookie-customize').addEventListener('click', function() {
+    banner.classList.add('customizing');
+  });
+
+  analyticsToggle.addEventListener('click', function() {
+    var on = analyticsToggle.classList.toggle('on');
+    analyticsToggle.setAttribute('aria-checked', on ? 'true' : 'false');
+  });
+
+  document.getElementById('cookie-save').addEventListener('click', function() {
+    if (analyticsToggle.classList.contains('on')) {
+      closeBanner('accepted');
+      grantConsent();
+    } else {
+      closeBanner('rejected');
+    }
   });
 })();
 </script>

@@ -3,8 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Harry's Tyres – Loughborough</title>
+  <title>Harry's Tyres Loughborough — Tyre Fitting, Puncture Repair & New/Used Tyres</title>
+  <meta name="description" content="Same-day tyre fitting in Loughborough. New &amp; quality used tyres for all budgets. Puncture repair, wheel balancing, AA &amp; RAC approved. Walk-ins welcome — call 01509 232522." />
+  <link rel="canonical" href="https://harrystyres.com/" />
   <link rel="icon" type="image/png" href="favicon.png" />
+
+  <!-- Open Graph / social previews -->
+  <meta property="og:title" content="Harry's Tyres Loughborough — Tyre Fitting & Repair" />
+  <meta property="og:description" content="Same-day tyre fitting in Loughborough. New &amp; quality used tyres, puncture repair, wheel balancing. AA &amp; RAC approved." />
+  <meta property="og:url" content="https://harrystyres.com/" />
+  <meta property="og:type" content="website" />
+
+  <!-- LocalBusiness structured data — helps Google understand who you are -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TireShop",
+    "name": "Harry's Tyres",
+    "description": "Tyre fitting, puncture repair, new and quality used tyres in Loughborough. Same-day service, AA & RAC approved.",
+    "url": "https://harrystyres.com/",
+    "telephone": "+441509232522",
+    "priceRange": "££",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "73-75 Nottingham Road",
+      "addressLocality": "Loughborough",
+      "postalCode": "LE11 1ES",
+      "addressCountry": "GB"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 52.7754411,
+      "longitude": -1.1992543
+    },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "17:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "13:00" }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.4",
+      "reviewCount": "350"
+    },
+    "sameAs": []
+  }
+  </script>
 
   <!-- Google Search Console verification -->
   <meta name="google-site-verification" content="VXOi01566IXit5CZz2lBq9wvCAyC_Vkwl5NYX4UZ7ig" />
@@ -1357,6 +1400,11 @@
 </head>
 <body>
 
+<!-- Hidden H1 for search engines; visible content uses styled headings below -->
+<h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
+  Tyre Fitting in Loughborough — Harry's Tyres
+</h1>
+
 <!-- ── NAV ── -->
 <header>
   <div class="logo">
@@ -1383,8 +1431,8 @@
       <em>We took that literally.</em>"
     </div>
     <p class="story-byline">
-      30+ years. One craft. No gimmicks.<br>
-      Just fast, honest tyre work — done right the first time.
+      30+ years of tyre fitting in Loughborough.<br>
+      Fast, honest work — done right the first time.
     </p>
   </div>
 
@@ -1447,7 +1495,7 @@
     <h2 class="about-heading">HARRY'S TYRES</h2>
     <div class="about-rule"></div>
     <p class="about-text">
-      For over 30 years, local drivers have trusted us because we focus on tyres — and we do it right. Fast service, honest advice, no upselling.
+      For over 30 years, drivers in Loughborough have trusted Harry's Tyres for tyre fitting, puncture repair and quality used tyres. We focus on tyres — and we do it right. Fast service, honest advice, no upselling.
     </p>
     <p class="about-text">
       Most jobs are completed within 30–60 minutes, and in urgent situations, even faster — so you're back on the road without delays.
@@ -2011,6 +2059,50 @@
       grantConsent();
     } else {
       closeBanner('rejected');
+    }
+  });
+})();
+</script>
+
+<!-- ── PHONE & DIRECTIONS CLICK TRACKING ── -->
+<script>
+(function () {
+  // Sends an event to GA4. Respects Consent Mode — when consent is denied,
+  // gtag still records cookieless pings so totals appear in reports.
+  function track(eventName, params) {
+    if (typeof gtag !== 'function') return;
+    gtag('event', eventName, params || {});
+  }
+
+  // Pick a friendly location label based on which section the click came from
+  function locationOf(el) {
+    if (el.closest('.hero-card'))     return 'hero';
+    if (el.closest('.footer-cta'))    return 'footer_cta';
+    if (el.closest('.need-tyres'))    return 'why_choose';
+    if (el.closest('.map-btns'))      return 'find_us';
+    if (el.closest('.wa-btn'))        return 'whatsapp_button';
+    return 'other';
+  }
+
+  document.addEventListener('click', function (e) {
+    var link = e.target && e.target.closest && e.target.closest('a');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+
+    // Phone click — tel: links
+    if (href.indexOf('tel:') === 0) {
+      track('phone_click', { location: locationOf(link) });
+      return;
+    }
+
+    // Directions — Google Maps or Waze
+    var isGmaps = href.indexOf('google.com/maps') > -1 || href.indexOf('maps.google.com') > -1;
+    var isWaze  = href.indexOf('waze.com') > -1;
+    if (isGmaps || isWaze) {
+      track('directions_click', {
+        destination: isWaze ? 'waze' : 'google_maps',
+        location: locationOf(link)
+      });
     }
   });
 })();

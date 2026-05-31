@@ -587,6 +587,107 @@
       background: linear-gradient(to bottom, rgba(24,37,63,0.25) 0%, rgba(24,37,63,0.88) 100%);
     }
 
+    /* Highlighted card when detail panel is open */
+    .svc-card.active {
+      outline: 3px solid var(--yellow);
+      outline-offset: 2px;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .svc-card.active::after {
+      background: linear-gradient(to bottom, rgba(24,37,63,0.25) 0%, rgba(24,37,63,0.88) 100%);
+    }
+
+    /* Service detail panel — slides in below the grid */
+    .service-detail-panel {
+      display: none;
+      background: var(--gray-bg);
+      border: 1px solid #ddd9d0;
+      border-radius: 12px;
+      padding: 26px 30px;
+      margin-top: 18px;
+      position: relative;
+      animation: svcSlide 0.28s ease both;
+    }
+    .service-detail-panel.show { display: block; }
+    @keyframes svcSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .service-detail-close {
+      position: absolute;
+      top: 10px; right: 12px;
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      color: #888;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+    }
+    .service-detail-close:hover { color: var(--navy); background: rgba(0,0,0,0.05); }
+    .service-detail-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .service-detail-rule {
+      width: 36px; height: 3px;
+      background: var(--yellow);
+      margin-bottom: 14px;
+    }
+    .service-detail-desc {
+      font-size: 14.5px;
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .service-detail-options {
+      list-style: none;
+      margin: 0 0 14px;
+      padding: 0;
+    }
+    .service-detail-options li {
+      padding: 5px 0 5px 18px;
+      position: relative;
+      font-size: 14px;
+      color: #333;
+    }
+    .service-detail-options li::before {
+      content: "•";
+      color: var(--yellow);
+      font-weight: 900;
+      position: absolute;
+      left: 4px;
+      top: 5px;
+      font-size: 18px;
+    }
+    .service-detail-cta {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.55;
+      padding-top: 4px;
+      border-top: 1px solid rgba(0,0,0,0.07);
+      margin-top: 6px;
+      padding-top: 12px;
+    }
+    .service-detail-cta strong { color: var(--navy); }
+    .service-detail-cta a {
+      color: var(--navy);
+      font-weight: 800;
+      text-decoration: underline;
+    }
+    @media (max-width: 640px) {
+      .service-detail-panel { padding: 20px 18px; }
+      .service-detail-title { font-size: 18px; }
+      .service-detail-desc, .service-detail-cta { font-size: 13.5px; }
+    }
+
     .svc-label {
       position: absolute;
       bottom: 0;
@@ -1518,48 +1619,51 @@
   <div class="services-grid">
 
     <!-- Tyre Fitting -->
-    <div class="svc-card">
+    <div class="svc-card" data-service="tyre-fitting" role="button" tabindex="0" aria-label="Show details for Tyre Fitting">
       <img src="https://images.unsplash.com/photo-1599082267768-4815b2ea6bd2?w=600&q=80" alt="Tyre Fitting" loading="lazy">
       <div class="svc-label">Tyre Fitting</div>
     </div>
 
     <!-- Puncture Repair -->
-    <div class="svc-card">
+    <div class="svc-card" data-service="puncture-repair" role="button" tabindex="0" aria-label="Show details for Puncture Repair">
       <img src="https://hmtyresandwheels.co.uk/wp-content/uploads/2025/12/shutterstock_2311096437-1024x681.jpg" alt="Puncture Repair" loading="lazy">
       <div class="svc-label">Puncture Repair</div>
     </div>
 
     <!-- New Tyres -->
-    <div class="svc-card">
+    <div class="svc-card" data-service="new-tyres" role="button" tabindex="0" aria-label="Show details for New Tyres">
       <img src="https://images.unsplash.com/photo-1571335746824-742511d49bce?w=600&q=80" alt="New Tyres" loading="lazy">
       <div class="svc-label">New Tyres</div>
     </div>
 
     <!-- Quality Used Tyres -->
-    <div class="svc-card">
+    <div class="svc-card" data-service="quality-used-tyres" role="button" tabindex="0" aria-label="Show details for Quality Used Tyres">
       <img src="https://images.unsplash.com/photo-1613214036979-1c6a7e0cf677?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Quality Used Tyres" loading="lazy">
       <div class="svc-label">Quality Used Tyres</div>
     </div>
 
     <!-- Emergency Help -->
-    <div class="svc-card">
+    <div class="svc-card" data-service="emergency-help" role="button" tabindex="0" aria-label="Show details for Emergency Help">
       <img src="https://plus.unsplash.com/premium_photo-1683141559021-3d1273fbb652?w=600&q=80" alt="Emergency Help" loading="lazy">
       <div class="svc-label">Emergency Help</div>
     </div>
 
     <!-- Wheel Balancing -->
-    <div class="svc-card">
+    <div class="svc-card" data-service="wheel-balancing" role="button" tabindex="0" aria-label="Show details for Wheel Balancing">
       <img src="https://images.unsplash.com/photo-1645445522156-9ac06bc7a767?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2hlZWwlMjBiYWxhbmNpbmd8ZW58MHx8MHx8fDA%3D" alt="Wheel Balancing" loading="lazy">
       <div class="svc-label">Wheel Balancing</div>
     </div>
 
     <!-- Alloy Wheels -->
-    <div class="svc-card">
+    <div class="svc-card" data-service="alloy-wheels" role="button" tabindex="0" aria-label="Show details for Alloy Wheels">
       <img src="https://images.unsplash.com/photo-1611633235555-45e252fe48c8?w=600&q=80" alt="Alloy Wheels" loading="lazy">
       <div class="svc-label">Alloy Wheels</div>
     </div>
 
   </div>
+
+  <!-- Service detail panel — populated on click -->
+  <div class="service-detail-panel" id="serviceDetailPanel" role="region" aria-live="polite" aria-hidden="true"></div>
 </div>
 
 <!-- ── TYRE SIZE GUIDE ── -->
@@ -2060,6 +2164,157 @@
     } else {
       closeBanner('rejected');
     }
+  });
+})();
+</script>
+
+<!-- ── SERVICE CARDS — DETAIL PANEL ── -->
+<script>
+(function () {
+  var SERVICES = {
+    'tyre-fitting': {
+      title: 'Tyre Fitting',
+      desc: "Same-day fitting on any car. Walk-ins welcome, no appointment needed. Most jobs done within 30 minutes.",
+      cta: "Call with your tyre size and we'll have them ready when you arrive."
+    },
+    'puncture-repair': {
+      title: 'Puncture Repair',
+      desc: "Repairable punctures fixed quickly — typically under 30 minutes. We'll always be honest about whether a repair or replacement is safer.",
+      cta: "Pop in any time — no booking needed."
+    },
+    'new-tyres': {
+      title: 'New Tyres',
+      desc: "We stock new tyres to suit every budget — from value brands to premium names.",
+      options: [
+        'Budget-friendly — reliable, great value',
+        'Mid-range — proven brands, balanced cost and performance',
+        'Premium — Michelin, Continental, Bridgestone, Pirelli'
+      ],
+      cta: "Call with your reg — we'll talk you through the options and quote on the spot."
+    },
+    'quality-used-tyres': {
+      title: 'Quality Used Tyres',
+      desc: "Every used tyre is hand-checked before fitting. Great option when you need a quick, affordable replacement.",
+      cta: "Stock changes daily — call to check what's available in your size."
+    },
+    'emergency-help': {
+      title: 'Emergency Help',
+      desc: "AA & RAC roadside partner. If you're stranded locally we can supply and fit on the spot.",
+      cta: "Already broken down? Call the AA or RAC — we're the people they send."
+    },
+    'wheel-balancing': {
+      title: 'Wheel Balancing',
+      desc: "Eliminates vibration, extends tyre life, keeps your car driving smoothly.",
+      cta: "Pop in — usually done within 20 minutes."
+    },
+    'alloy-wheels': {
+      title: 'Alloy Wheels',
+      desc: "We help with refurbishment, repair, or supplying new alloys via trusted local refinishers.",
+      options: [
+        'Refurbishment — scuffs, kerb damage, paint',
+        'Repair — cracks, dents, structural fixes',
+        'New alloys — sourced through local partners'
+      ],
+      cta: "Bring your wheel in or send us a photo — we'll quote."
+    }
+  };
+
+  var panel = document.getElementById('serviceDetailPanel');
+  var currentCard = null;
+  var currentId = null;
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function buildHTML(svc) {
+    var html = '<button class="service-detail-close" aria-label="Close details">&times;</button>'
+      + '<div class="service-detail-title">' + esc(svc.title) + '</div>'
+      + '<div class="service-detail-rule"></div>'
+      + '<div class="service-detail-desc">' + esc(svc.desc) + '</div>';
+    if (svc.options && svc.options.length) {
+      html += '<ul class="service-detail-options">';
+      svc.options.forEach(function (o) { html += '<li>' + esc(o) + '</li>'; });
+      html += '</ul>';
+    }
+    html += '<div class="service-detail-cta">'
+      + '💬 ' + esc(svc.cta) + '<br>'
+      + '📞 <a href="tel:01509232522">01509 232522</a> — Tap to call'
+      + '</div>';
+    return html;
+  }
+
+  function showService(id, card) {
+    var svc = SERVICES[id];
+    if (!svc) return;
+
+    if (currentCard && currentCard !== card) currentCard.classList.remove('active');
+    card.classList.add('active');
+    currentCard = card;
+    currentId = id;
+
+    panel.innerHTML = buildHTML(svc);
+    panel.classList.add('show');
+    panel.setAttribute('aria-hidden', 'false');
+
+    // Track in GA4 (counts even when consent is denied, via consent mode)
+    if (typeof gtag === 'function') {
+      gtag('event', 'service_detail_view', { service_id: id });
+    }
+
+    // Wire the close button
+    panel.querySelector('.service-detail-close').addEventListener('click', function (e) {
+      e.stopPropagation();
+      closePanel();
+    });
+
+    // Auto-scroll into view on smaller screens
+    if (window.innerWidth < 900) {
+      setTimeout(function () {
+        var rect = panel.getBoundingClientRect();
+        var inView = rect.top >= 60 && rect.bottom <= (window.innerHeight - 20);
+        if (!inView) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 80);
+    }
+  }
+
+  function closePanel() {
+    if (currentCard) currentCard.classList.remove('active');
+    currentCard = null;
+    currentId = null;
+    panel.classList.remove('show');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+
+  // Click + keyboard activation on cards
+  document.querySelectorAll('.svc-card[data-service]').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var id = card.getAttribute('data-service');
+      if (currentId === id) { closePanel(); return; }   // tap same card = toggle close
+      showService(id, card);
+    });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+
+  // Click outside the panel/cards → close
+  document.addEventListener('click', function (e) {
+    if (!panel.classList.contains('show')) return;
+    if (panel.contains(e.target)) return;
+    if (e.target.closest && e.target.closest('.svc-card[data-service]')) return;
+    closePanel();
+  });
+
+  // Esc key → close
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && panel.classList.contains('show')) closePanel();
   });
 })();
 </script>

@@ -1,0 +1,12 @@
+.DS_Store
+.trash/
+*.swp
+node_modules/
+.vscode/
+.idea/
+.vercel
+
+# env files — never commit secrets
+.env
+.env.*
+!.env.example
